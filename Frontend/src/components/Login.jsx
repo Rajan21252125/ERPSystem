@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { TfiReload } from "react-icons/tfi";
@@ -32,11 +33,13 @@ function Login() {
         const json = await response.json();
         console.log(json);
         if (json.success) {
-          if (credentials.role === "students") {
+          if (json.role === "students") {
             localStorage.setItem('token', json.token);
+            localStorage.setItem('role', json.role);
             navigate('/');
           } else {
             localStorage.setItem('token', json.token);
+            localStorage.setItem('role', json.role);
             navigate('/admin')
           }
         } else {

@@ -23,17 +23,25 @@ body("password")
     }
     try {
         const { role , email, password } = req.body;
-        let user = await User.findOne({ email , password , role})
-        const data = {
-            user: {
-              id: user.id,
-            },
-          };
-          var token = jwt.sign(data, JWT_SECRET);
-          res.json({success:true , token });
+        let user = await User.findOne({ email })
+        // console.log(user)
+        // console.log(email,password,role)
+        if (!user) {
+            throw new Error("Invalid Email or Password");
+          } else if (user.password !== password) {
+            throw new Error("Invalid Password");
+          } else {
+            const data = {
+                user: {
+                  id: user.id,
+                },
+              };
+              var token = jwt.sign(data, JWT_SECRET);
+              res.json({success:true , token , role});
+        }
     } catch (error) {
-        // console.log(error)
-        return res.status(404).json({ error: "user not found with this email " })
+        console.log(error)
+        return res.status(400).json({ error: "Server ERROR !! Please comeback after some time" })
     }
 })
 // for signup

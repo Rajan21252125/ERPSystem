@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const StudentSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'userschema'
+    },
     firstName: {
         type: String,
         required: true,
@@ -52,13 +56,8 @@ const StudentSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Course'
         },
-        grade: String
+        course: String
     }],
-    role: {
-        type: String,
-        enum: ["student"],
-        required: true
-    }
 });
 
 const StudentModel = mongoose.model("Student", StudentSchema);

@@ -5,10 +5,10 @@ import { CgProfile } from "react-icons/cg";
 import { RiDeviceRecoverLine } from "react-icons/ri";
 import { MdLogout } from "react-icons/md";
 import { AiFillCaretDown } from "react-icons/ai";
-import { Link , useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Landing() {
-  let location = useLocation();
+  // let location = useLocation();
   const handleLogout = () => {
     localStorage.removeItem('token')
     window.location='/login'
