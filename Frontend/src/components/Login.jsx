@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { TfiReload } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
@@ -15,9 +15,14 @@ function Login() {
   const [text, setText] = useState("");
   const [captchaValid, setCaptchaValid] = useState(true); // Initialize to true
 
+
+
   const changeCaptcha = () => {
     setCaptcha(Math.random().toString(36).slice(8).toLocaleUpperCase());
   };
+
+
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -33,9 +38,10 @@ function Login() {
         const json = await response.json();
         console.log(json);
         if (json.success) {
-          if (json.role === "students") {
+          if (json.role === "student") {
             localStorage.setItem('token', json.token);
             localStorage.setItem('role', json.role);
+            localStorage.setItem('email', json.email);
             navigate('/');
           } else {
             localStorage.setItem('token', json.token);
@@ -54,6 +60,7 @@ function Login() {
       console.log("Failed");
     }
   };
+
 
   const handleOnChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });

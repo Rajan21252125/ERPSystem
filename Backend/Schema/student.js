@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const StudentSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'userschema'
-    },
     firstName: {
         type: String,
         required: true,
@@ -15,15 +11,10 @@ const StudentSchema = new mongoose.Schema({
         required: true,
         maxLength: 32
     },
-    email: {
-        type: String,
+    email:{
+        type:'string',
         unique: true,
         required: true
-    },
-    password: {
-        type: String,
-        required: true,
-        minLength: 6
     },
     dateOfBirth: {
         type: Date,
@@ -51,13 +42,18 @@ const StudentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    enrolledCourses: [{
-        courseId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Course'
-        },
-        course: String
-    }],
+    enrolledCourseName : {
+        type: 'String',
+        required : true
+    },
+    year : {
+        type: 'String',
+        required : true
+    },
+    semester : {
+        type: 'String',
+        required : true
+    },
 });
 
 const StudentModel = mongoose.model("Student", StudentSchema);

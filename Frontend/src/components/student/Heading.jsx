@@ -1,12 +1,12 @@
-/* eslint-disable no-unused-vars */
-import React from 'react';
+import { useSelector } from "react-redux";
 
 
 function heading() {
+  const data = useSelector(state => state.user.user)
   return (
     <div className='ml-4'>
       <div className="w-[87vw] flex justify-center">
-        <p> (BE - E & TC-A   2023-2024(SEMESTER-VII))</p>
+        <p> {`${data?.year} ${data?.enrolledCourseName} 2023-2024 (SEMESTER-${data?.semester})`} </p>
       </div>
     </div>
   )

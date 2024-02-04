@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const authRoute = require('./routes/userRoute.js');
+const addStudentRoute = require('./routes/studentRoute.js');
 
 dotenv.config();
 const app = express();
@@ -25,6 +26,10 @@ mongoose.connect(mongodb)
 
 // Authentication routes
 app.use('/api/auth', authRoute);
+
+
+// add student route
+app.use('/admin/student', addStudentRoute)
 
 // Default route
 app.get('/', (req, res) => {

@@ -1,8 +1,15 @@
-// eslint-disable-next-line no-unused-vars
-import React from 'react';
+import {useEffect} from 'react';
 import Navbar from './Navbar';
 
 const TeacherLandingPage = () => {
+
+
+  useEffect(() => {
+    if(!localStorage.getItem('token')){
+      window.location='/login'
+    }
+    // eslint-disable-next-line
+  }, []);
   return (
     <div>
         <Navbar />

@@ -1,13 +1,10 @@
-/* eslint-disable no-unused-vars */
-// StudentForm.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-const StudentForm = () => {
+const AddStudent = () => {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
         email: '',
-        password: '',
         dateOfBirth: '',
         address: {
             street: '',
@@ -16,7 +13,9 @@ const StudentForm = () => {
             zipCode: ''
         },
         contactNumber: '',
-        enrolledCourses: []
+        enrolledCourseName: '',
+        semester: '',
+        year: ''
     });
 
     const handleInputChange = (e) => {
@@ -38,60 +37,105 @@ const StudentForm = () => {
         }));
     };
 
-    const handleEnrolledCourseChange = (e) => {
-        const { value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            enrolledCourses: [...prevData.enrolledCourses, { courseId: value, course: 'Sample Course' }]
-        }));
-    };
+
+
+    const handleSubmitForm = async (e) => {
+        e.preventDefault()
+        console.log(formData)
+        try {
+            const response = await fetch("http://localhost:4000/admin/student/addStudent", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            });
+            const json = await response.json();
+            console.log(json)
+            if (json.success === true) {
+                alert('Added Successfully');
+                window.location.reload();
+            } else {
+                throw new Error('Something went wrong!')
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
-        <div>
-            <h2>Add New Student</h2>
-            <form>
-                <label>First Name:
-                    <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} required />
-                </label>
-                <label>Last Name:
-                    <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} required />
-                </label>
-                <label>Email:
-                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
-                </label>
-                <label>Password:
-                    <input type="password" name="password" value={formData.password} onChange={handleInputChange} required />
-                </label>
-                <label>Date of Birth:
-                    <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleInputChange} required />
-                </label>
-                <label>Street:
-                    <input type="text" name="street" value={formData.address.street} onChange={handleAddressChange} required />
-                </label>
-                <label>City:
-                    <input type="text" name="city" value={formData.address.city} onChange={handleAddressChange} required />
-                </label>
-                <label>State:
-                    <input type="text" name="state" value={formData.address.state} onChange={handleAddressChange} required />
-                </label>
-                <label>Zip Code:
-                    <input type="text" name="zipCode" value={formData.address.zipCode} onChange={handleAddressChange} required />
-                </label>
-                <label>Contact Number:
-                    <input type="text" name="contactNumber" value={formData.contactNumber} onChange={handleInputChange} required />
-                </label>
-                <label>Enrolled Courses:
-                    <select onChange={handleEnrolledCourseChange}>
-                        <option value="course1">Course 1</option>
-                        <option value="course2">Course 2</option>
-                        {/* Add more options based on your available courses */}
-                    </select>
-                </label>
-                <button type="submit">Add Student</button>
+        <div className='absolute border border-black w-[50%] bg-white shadow-xl rounded-xl top-10 left-10 px-4 py-2'>
+            <form onSubmit={handleSubmitForm}>
+                <div className='flex justify-between'>
+                    <div className='w-[49%]'>
+                        <label className='mt-2 text-base font-semibold'>First Name:
+                            <input type="text" name="firstName" className="w-full text-gray-500 p-2 border-2 border-gray-300 rounded" value={formData.firstName} onChange={handleInputChange} required />
+                        </label>
+                        <label className='mt-2 text-base font-semibold'>Last Name:
+                            <input type="text" name="lastName" className='w-full text-gray-500 p-2 border-2 border-gray-300 rounded' value={formData.lastName} onChange={handleInputChange} required />
+                        </label>
+                        <label className='mt-2 text-base font-semibold'>Email:
+                            <input type="email" name="email" className="w-full text-gray-500 p-2 border-2 border-gray-300 rounded" value={formData.email} onChange={handleInputChange} required />
+                        </label>
+                        <label className='mt-2 text-base font-semibold'>Date of Birth:
+                            <input type="date" name="dateOfBirth" className="w-full text-gray-500 p-2 border-2 border-gray-300 rounded" value={formData.dateOfBirth} onChange={handleInputChange} required />
+                        </label>
+                        <label className='mt-2 text-base font-semibold'>Enrolled Courses:
+                            <select className="w-full text-gray-500 p-2 border-2 border-gray-300 rounded" name='enrolledCourseName' value={formData.enrolledCourseName} onChange={handleInputChange}>
+                            <option value="All" disabled>Select a Enrolled Course</option>
+                                <option value="CSE">Computer Science</option>
+                                <option value="IT">Information Technology</option>
+                                <option value="E&TC">Electronic and Telecommunication</option>
+                                <option value="MECH">Mechanical</option>
+                                <option value="CIVIL">Civil</option>
+                            </select>
+                        </label>
+                        <label className='mt-2 text-base font-semibold'>Semester:
+                            <select className="w-full text-gray-500 p-2 border-2 border-gray-300 rounded" name='semester' value={formData.semester} onChange={handleInputChange}>
+                                <option value="All" disabled>Select a Semester</option>
+                                <option value="I">First Sem</option>
+                                <option value="II">Second Sem</option>
+                                <option value="III">Third Sem</option>
+                                <option value="IV">Fourth Sem</option>
+                                <option value="V">Fifth Sem</option>
+                                <option value="VI">Sixth Sem</option>
+                                <option value="VII">Seventh Sem</option>
+                                <option value="VIII">Eight Sem</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div className='w-[48%]'>
+                        <label className='mt-2 text-base font-semibold'>Street:
+                            <input type="text" name="street" className="w-full text-gray-500 p-2 border-2 border-gray-300 rounded" value={formData.address.street} onChange={handleAddressChange} required />
+                        </label>
+                        <label className='mt-2 text-base font-semibold'>City:
+                            <input type="text" name="city" className="w-full text-gray-500 p-2 border-2 border-gray-300 rounded" value={formData.address.city} onChange={handleAddressChange} required />
+                        </label>
+                        <label className='mt-2 text-base font-semibold'>State:
+                            <input type="text" name="state" className="w-full text-gray-500 p-2 border-2 border-gray-300 rounded" value={formData.address.state} onChange={handleAddressChange} required />
+                        </label>
+                        <label className='mt-2 text-base font-semibold'>Zip Code:
+                            <input type="text" name="zipCode" className="w-full text-gray-500 p-2 border-2 border-gray-300 rounded" value={formData.address.zipCode} onChange={handleAddressChange} required />
+                        </label>
+                        <label className='mt-2 text-base font-semibold'>Contact Number:
+                            <input type="text" name="contactNumber" className="w-full text-gray-500 p-2 border-2 border-gray-300 rounded" value={formData.contactNumber} onChange={handleInputChange} required />
+                        </label>
+                        <label className='mt-2 text-base font-semibold'>Year:
+                            <select className="w-full text-gray-500 p-2 border-2 border-gray-300 rounded" name='year' value={formData.year} onChange={handleInputChange}>
+                                <option value="All" disabled>Select a Year</option>
+                                <option value="F.E">First year</option>
+                                <option value="S.E">Second year</option>
+                                <option value="T.E">Third year</option>
+                                <option value="B.E">Fourth year</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div className='flex justify-center my-8'>
+                    <button type="submit" className="w-1/3 bg-blue-500 font-semibold text-white p-2 rounded hover:bg-blue-600">Add Student</button>
+                </div>
             </form>
         </div>
     );
 };
 
-export default StudentForm;
+export default AddStudent;
 

@@ -6,11 +6,18 @@ import { RiDeviceRecoverLine } from "react-icons/ri";
 import { MdLogout } from "react-icons/md";
 import { AiFillCaretDown } from "react-icons/ai";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import useGetData from "../../customHook/useGetData";
 
 function Landing() {
   // let location = useLocation();
+  useGetData(localStorage.getItem('email'))
+  const student = useSelector(store => store.user.user)
+  // console.log(store)
+
   const handleLogout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('role')
     window.location='/login'
   }
   return (
@@ -24,9 +31,9 @@ function Landing() {
         <AiFillCaretDown />
         <div className='hidden z-100 bg-white group-hover:block absolute top-10 right-2 text-base text-gray-800'>
             <div className='h-40 w-56 p-4 border border-black bg-white/60'>
-                <p className='font-bold'>Pragya Bnawat (923838)</p>
-                <div className='flex items-center space-x-2'><FcDepartment /> <p>BE E&TC - A</p>B</div>
-                <div className='flex items-center space-x-2'><CgProfile /><p>SEMESTER-VII(First)</p></div>
+                <p className='font-bold'>{student?.firstName + " " + student?.lastName}</p>
+                <div className='flex items-center space-x-2 text-sm'><FcDepartment />{student?.year + " " + student?.enrolledCourseName}</div>
+                <div className='flex items-center space-x-2'><CgProfile /><p>SEMESTER-{student?.semester}</p></div>
                 <hr className='bg-gray-400 h-[2px]'/>
                 <div className='flex items-center space-x-2'><RiDeviceRecoverLine /><p>Change Password</p></div>
                 <div className='flex items-center space-x-2 cursor-pointer'><MdLogout /><p onClick={handleLogout}>Logout</p></div>

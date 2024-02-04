@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 
 
@@ -9,8 +10,8 @@ const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   const navLinks = [
     {
-      id: "Add Student",
-      title: "addStudents",
+      id: "/admin/Student",
+      title: "Students-Data",
     },
     {
       id: "features",
@@ -27,6 +28,7 @@ const Navbar = () => {
   ];
   const handleLogout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('role')
     window.location='/login'
   }
   
@@ -46,7 +48,7 @@ const Navbar = () => {
             } ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
             onClick={() => setActive(nav.title)}
           >
-            <a href={`${nav.id}`}>{nav.title}</a>
+            <Link to={`${nav.id}`}>{nav.title}</Link>
           </li>
         ))}
       </ul>
