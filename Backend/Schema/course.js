@@ -8,6 +8,10 @@ const courseSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    semester : {
+        type: String,
+        required: true
+    },
     subjects : {
         type : [String],
         default : [],
