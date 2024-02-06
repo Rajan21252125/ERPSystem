@@ -28,7 +28,7 @@ function Login() {
     e.preventDefault();
     if (text.toLocaleLowerCase() === captcha.toLocaleLowerCase()) {
       setCaptchaValid(true);
-      console.log(credentials)
+      // console.log(credentials)
       try {
         const response = await fetch('http://localhost:4000/api/auth/login', {
           method: 'POST',
@@ -36,7 +36,7 @@ function Login() {
           body: JSON.stringify({ email: credentials.email, password: credentials.password, role: credentials.role }),
         });
         const json = await response.json();
-        console.log(json);
+        // console.log(json);
         if (json.success) {
           if (json.role === "student") {
             localStorage.setItem('token', json.token);

@@ -82,7 +82,7 @@ route.get('/getAllData', [] , async(req,res) => {
 
 
 
-
+// delete student with the id
 route.delete('/deleteStudent/:id', [], async (req, res) => {
   try {
     const studentId = req.params.id;
@@ -151,7 +151,7 @@ route.put("/updateStudent/:id", [], async (req, res) => {
       { new: true }
     );
     
-    res.json({ student });
+    res.json({ success:true, student });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

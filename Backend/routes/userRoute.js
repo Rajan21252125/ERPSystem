@@ -86,22 +86,69 @@ route.post('/signup', [ // validation for email and length check for name and pa
 
 
 
+
+
 // For update password
-route.put('/update/password', [], async(req, res) => {
+route.put('/update', [], async (req, res) => {
   try {
-    const { password } = req.body
-    const updatedData = { password: password }
-    let student = await User.findById(req.param.id)
-    student = await User.findByIdAndUpdate(
-      req.params.id,
-      { $set: updatedData },
+    const { email,password } = req.body;
+    // Use findById to find the document by ID
+    let student = await User.findOne({email});
+    
+    if (!student) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Use findByIdAndUpdate to update the password field
+    student = await User.findOneAndUpdate(
+      {email},
+      { $set: { password: password } },
       { new: true }
     );
-    res.json({ success: true })
+
+    res.json({ success: true });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
-  };
+  }
+});
+
+
+
+
+// to delete the user 
+route.delete('/deleteEmail',async (req,res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.deleteOne({email})
+    if (user && user.deletedCount !== undefined && user.deletedCount > 0) {
+      return res.status(200).json({ success: true, message: 'Deletion Successful!', email });
+    } else {
+      return res.status(404).json({ success: false, message: 'Student not found with this email id' , email});
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+})
+
+
+
+
+// Endpoint to get the last updated email
+route.get('/getLastEmail', async (req, res) => {
+  try {
+    const lastStudent = await User.findOne().sort({ _id: -1 }).exec();
+
+    if (!lastStudent) {
+      return res.json({ success: false, message: 'No students found' });
+    }
+
+    res.json({ success: true, lastUpdatedEmail: lastStudent.email });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
 });
 
 

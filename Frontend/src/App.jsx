@@ -10,6 +10,7 @@ import AddAttendance from './components/tecaher/AddAttendance';
 import store from './store/store';
 import { Provider } from 'react-redux';
 import StudentForm from './components/tecaher/StudentForm';
+import ChangePassword from './components/student/ChangePassword';
 
 function App() {
   const [role, setRole] = useState('');
@@ -30,6 +31,7 @@ function App() {
         <Route path="/admin/Student" element={role === 'student' ? <Navigate to="/" /> : <StudentForm />} />
         <Route path="/addmarks" element={<AddMarks />} />
         <Route path="/addattendance" element={<AddAttendance />} />
+        <Route path="/changePass" element={<ChangePassword />} />
       </Routes>
     </Router>
     </Provider>

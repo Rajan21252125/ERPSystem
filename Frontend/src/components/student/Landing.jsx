@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useState } from 'react';
 import { FcDepartment } from "react-icons/fc";
 import { CgProfile } from "react-icons/cg";
 import { RiDeviceRecoverLine } from "react-icons/ri";
@@ -15,9 +15,15 @@ function Landing() {
   const student = useSelector(store => store.user.user)
   // console.log(store)
 
+
+  const handleChangePassword = () => {
+    window.location.href = '/changePass'
+  }
+
   const handleLogout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('role')
+    localStorage.removeItem('email')
     window.location='/login'
   }
   return (
@@ -35,7 +41,7 @@ function Landing() {
                 <div className='flex items-center space-x-2 text-sm'><FcDepartment />{student?.year + " " + student?.enrolledCourseName}</div>
                 <div className='flex items-center space-x-2'><CgProfile /><p>SEMESTER-{student?.semester}</p></div>
                 <hr className='bg-gray-400 h-[2px]'/>
-                <div className='flex items-center space-x-2'><RiDeviceRecoverLine /><p>Change Password</p></div>
+                <div className='flex items-center space-x-2 cursor-pointer'><RiDeviceRecoverLine /><p onClick={handleChangePassword}>Change Password</p></div>
                 <div className='flex items-center space-x-2 cursor-pointer'><MdLogout /><p onClick={handleLogout}>Logout</p></div>
             </div>
         </div>

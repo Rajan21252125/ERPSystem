@@ -7,10 +7,9 @@ import Main from './Main';
 const Index = () => {
     const navigate = useNavigate();
     useEffect(() => {
-        if(localStorage.getItem('token')){
-          console.log("Hello world")
-        }else{
-            navigate('/login')
+        if(!localStorage.getItem('token')){
+        //   console.log("Hello world")
+        navigate('/login')
         }
         // eslint-disable-next-line
       }, []);
