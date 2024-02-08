@@ -14,8 +14,8 @@ const Navbar = () => {
       title: "Students-Data",
     },
     {
-      id: "features",
-      title: "removeStudent",
+      id: "/admin/course",
+      title: "Course-Data",
     },
     {
       id: "product",

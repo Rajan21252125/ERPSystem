@@ -16,7 +16,7 @@ const useGetData = (email) => {
                 body: JSON.stringify({ email : email})
             })
             const json = await response.json()
-            console.log(json)
+            // console.log(json)
             dispatch(getUserData(json))
         } catch (error) {
             console.log(error)
