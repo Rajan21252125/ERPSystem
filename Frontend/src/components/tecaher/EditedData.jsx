@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState , useEffect } from "react";
+import useGetAllCourse from "../../customHook/useGetAllCourse";
 
 
 const EditedData = ({data}) => {
@@ -19,6 +20,9 @@ const EditedData = ({data}) => {
         semester: '',
         year: ''
     });
+
+
+  const courses = useGetAllCourse();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -65,6 +69,7 @@ const EditedData = ({data}) => {
     }
 
     useEffect(() => {
+        console.log(data)
         const originalDate = data?.dateOfBirth;
         const formattedDate = originalDate ? new Date(originalDate).toISOString().split('T')[0] : "";
 
@@ -112,11 +117,12 @@ const EditedData = ({data}) => {
                         <label className='mt-2 text-base font-semibold'>Enrolled Courses:
                             <select className="w-full text-gray-500 p-2 border-2 border-gray-300 rounded" name='enrolledCourseName' value={formData.enrolledCourseName} onChange={handleInputChange}>
                             <option value="" disabled>Select a Enrolled Course</option>
-                                <option value="CSE">Computer Science</option>
-                                <option value="IT">Information Technology</option>
-                                <option value="E&TC">Electronic and Telecommunication</option>
-                                <option value="MECH">Mechanical</option>
-                                <option value="CIVIL">Civil</option>
+                            {courses &&
+                            courses.map((course, index) => (
+                                <option key={index} value={course}>
+                                {course}
+                                </option>
+                            ))}
                             </select>
                         </label>
                         <label className='mt-2 text-base font-semibold'>Semester:

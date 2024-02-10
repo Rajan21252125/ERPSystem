@@ -33,19 +33,19 @@ const StudentForm = () => {
     fetchData();
   }, []);
 
-
   // Filter student data based on search query
   useEffect(() => {
-    const filteredData = studentData.filter((student) =>
-      `${student.firstName} ${student.lastName}`
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase())&&
-        (selectedCourse === "" || student.enrolledCourseName === selectedCourse) &&
+    const filteredData = studentData.filter(
+      (student) =>
+        `${student.firstName} ${student.lastName}`
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) &&
+        (selectedCourse === "" ||
+          student.enrolledCourseName === selectedCourse) &&
         (selectedYear === "" || student.year === selectedYear)
     );
     setFilteredStudentData(filteredData);
-  }, [searchQuery, studentData , selectedCourse , selectedYear]);
-
+  }, [searchQuery, studentData, selectedCourse, selectedYear]);
 
   const handleAddStudent = () => {
     setHide(!hide);
@@ -71,6 +71,9 @@ const StudentForm = () => {
             "http://localhost:4000/api/auth/deleteEmail",
             {
               method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
               body: JSON.stringify({ email }),
             }
           );
@@ -81,7 +84,7 @@ const StudentForm = () => {
             console.log(emailJson);
           }
         } catch (error) {
-          console.log(error)
+          console.log(error);
         }
         alert("Deleted Successfully");
         fetchData();
@@ -104,7 +107,6 @@ const StudentForm = () => {
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
   };
-
 
   // Handle select change for course
   const handleCourseChange = (e) => {
@@ -134,7 +136,6 @@ const StudentForm = () => {
               placeholder="Search by Name"
               value={searchQuery}
               onChange={handleSearchInputChange}
-
             />
             <select
               className="text-gray-500 py-2 px-4 w-64 border-2 border-gray-300 rounded"
@@ -143,10 +144,10 @@ const StudentForm = () => {
               onChange={handleCourseChange}
             >
               <option value="">Select Course</option>
-              <option value="CSE">Computer Science</option>
-              <option value="IT">Information Technology</option>
-              <option value="E&TC">Electronic and Telecommunication</option>
-              <option value="MECH">Mechanical</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Information Technology">Information Technology</option>
+              <option value="Electronic and Telecommunication">Electronic and Telecommunication</option>
+              <option value="Mechanical">Mechanical</option>
               <option value="CIVIL">Civil</option>
             </select>
             <select

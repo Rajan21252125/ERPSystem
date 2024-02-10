@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useGetLastEmail from "../../customHook/useGetLastEmail";
 
 const AddStudent = () => {
   const lastEmail = useGetLastEmail();
-  // console.log(lastEmail)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -82,6 +81,19 @@ const AddStudent = () => {
       console.log(error);
     }
   };
+
+
+  // Update formData.email when lastEmail changes
+useEffect(() => {
+  if (lastEmail) {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      email: lastEmail,
+    }));
+  }
+}, [lastEmail]);
+
+console.log(formData.email);
 
   return (
     <div className="absolute border border-black w-[50%] bg-white shadow-xl rounded-xl top-10 left-10 px-4 py-2">

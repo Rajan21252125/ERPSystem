@@ -160,6 +160,25 @@ route.put("/updateStudent/:id", [], async (req, res) => {
 
 
 
+// get student based on the semester and courseName 
+// Route to fetch students based on semester and courseName
+route.get('/students', async (req, res) => {
+  try {
+    // Extract semester and courseName from query parameters
+    const { semester, courseName } = req.query;
+    console.log(semester,courseName)
+
+    // Query the database for students matching the provided semester and courseName
+    const students = await Student.find({ semester, enrolledCourseName: courseName });
+
+    // Return the list of students as a JSON response
+    res.status(200).json({ success: true, data: students });
+  } catch (error) {
+    console.error('Error fetching students:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
 
 
 

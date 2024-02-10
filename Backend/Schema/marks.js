@@ -3,15 +3,9 @@ const mongoose = require('mongoose');
 
 const marksSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    studentId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Student', // Reference the Student model
-        required: true,
-      },
-      courseId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course', // Reference the Course model
-        required: true,
+      email:{
+        type : String ,
+        required: true
       },
       subject: {
         type: String,
@@ -21,6 +15,10 @@ const marksSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
+      semester : {
+        type : String,
+        required: true
+      }
 });
 
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Navbar from "./Navbar";
 import useGetAllCourse from "../../customHook/useGetAllCourse";
 import AddSubject from "./AddSubject";
+import DeleteSubject from "./DeleteSubject";
 
 const Course = () => {
   const courses = useGetAllCourse();
@@ -13,7 +14,7 @@ const Course = () => {
     year: 4,
   });
 
-  const handleAddSubjectData = (e) => {
+  const handleAddCoursetData = (e) => {
     const { name, value } = e.target;
     setAddCourse((prevData) => ({
       ...prevData,
@@ -43,6 +44,7 @@ const Course = () => {
         year: 4,
       });
       alert(json.message);
+      location.reload()
     } catch (error) {
       alert("Something went wrong");
       console.log(error);
@@ -83,6 +85,7 @@ const Course = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Add a Subject */}
           <AddSubject />
+          <DeleteSubject />
         </div>
       </div>
       <div className="container mx-auto py-8">
@@ -98,7 +101,7 @@ const Course = () => {
                   type="text"
                   name="courseName"
                   className="px-4 py-2 border border-gray-300 rounded"
-                  onChange={handleAddSubjectData}
+                  onChange={handleAddCoursetData}
                   value={addCourse.courseName}
                 />
               </div>
@@ -110,7 +113,7 @@ const Course = () => {
                   type="text"
                   name="year"
                   className="px-4 py-2 border border-gray-300 rounded"
-                  onChange={handleAddSubjectData}
+                  onChange={handleAddCoursetData}
                   value={addCourse.year}
                 />
               </div>

@@ -5,6 +5,7 @@ const cors = require('cors');
 const authRoute = require('./routes/userRoute.js');
 const addStudentRoute = require('./routes/studentRoute.js');
 const addCourseRoute = require('./routes/courseRoute.js');
+const addAttendanceRoute = require('./routes/attendanceRoute.js');
 
 dotenv.config();
 const app = express();
@@ -34,6 +35,12 @@ app.use('/admin/student', addStudentRoute)
 
 // course
 app.use('/admin/course', addCourseRoute)
+
+
+// attendance
+app.use('/admin/attendance', addAttendanceRoute)
+
+
 
 // Default route
 app.get('/', (req, res) => {

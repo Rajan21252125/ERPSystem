@@ -18,6 +18,7 @@ const useGetLastEmail = () => {
     useEffect(() => {
         fetchData()
     },[])
+    // console.log(lastEmail)
     const mail = lastEmail.split("@")[0]
     let numbers = '';
     for (let i = 0; i < mail.length; i++) {
@@ -27,12 +28,12 @@ const useGetLastEmail = () => {
             numbers += char;
         }
     }
-    const incrementedNumber = parseInt(numbers) + 1
+    const incrementedNumber = String(parseInt(numbers) + 1)
     let res = ""
     if (incrementedNumber < 10){
-        res =  `student0${String(incrementedNumber)}@rpscollege.in`
+        res =  `student0${incrementedNumber}@rpscollege.in`
     } else {
-        res =  `student${String(incrementedNumber)}@rpscollege.in`
+        res =  `student${incrementedNumber}@rpscollege.in`
     }
     // console.log(res)
     return res

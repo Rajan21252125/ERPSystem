@@ -18,12 +18,12 @@ const Navbar = () => {
       title: "Course-Data",
     },
     {
-      id: "product",
-      title: "addMarks",
+      id: "/admin/addattendance",
+      title: "addAttendance",
     },
     {
-      id: "clients",
-      title: "addAttendance",
+      id: "product",
+      title: "addMarks",
     }
   ];
   const handleLogout = () => {
