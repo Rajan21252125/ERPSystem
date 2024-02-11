@@ -30,7 +30,7 @@ function App() {
         <Route path="/login" element={<Login setRole={setRole} />} />
         <Route path="/admin" element={role === 'student' ? <Navigate to="/" /> : <Main />} />
         <Route path="/admin/Student" element={role === 'student' ? <Navigate to="/" /> : <StudentForm />} />
-        <Route path="/addmarks" element={<AddMarks />} />
+        <Route path="/admin/addmarks" element={<AddMarks />} />
         <Route path="/admin/course" element={<Course />} />
         <Route path="/admin/addattendance" element={<AddAttendance />} />
         <Route path="/changePass" element={<ChangePassword />} />

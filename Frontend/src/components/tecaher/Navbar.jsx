@@ -22,7 +22,7 @@ const Navbar = () => {
       title: "addAttendance",
     },
     {
-      id: "product",
+      id: "/admin/addmarks",
       title: "addMarks",
     }
   ];

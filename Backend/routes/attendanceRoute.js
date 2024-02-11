@@ -17,6 +17,16 @@ route.post('/add', async (req, res) => {
       res.status(500).json({ success: false, message: 'Internal server error' });
     }
   });
+
+
+route.get("/", async(req,res) => {
+  try {
+    const marks = await Attendance.find({})
+    res.status(200).send({ success : true , data: marks});
+  } catch (error) {
+    console.log(error)
+  }
+})
   
 
 

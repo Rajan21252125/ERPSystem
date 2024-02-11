@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
-import React from "react";
 import Sidebar from "./Sidebar";
 import Heading from "./Heading";
 import { FaRegThumbsUp, FaRegBell } from "react-icons/fa";

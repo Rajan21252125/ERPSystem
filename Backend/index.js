@@ -2,10 +2,13 @@ const express = require("express");
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const path = require("path");
 const authRoute = require('./routes/userRoute.js');
 const addStudentRoute = require('./routes/studentRoute.js');
 const addCourseRoute = require('./routes/courseRoute.js');
 const addAttendanceRoute = require('./routes/attendanceRoute.js');
+const uploadImage = require('./routes/uploadImage.js');
+const getMarksRoutes = require('./routes/marksRoute.js');
 
 dotenv.config();
 const app = express();
@@ -15,6 +18,7 @@ const mongodb = process.env.MONGODBURI;
 // Middleware to parse JSON requests
 app.use(express.json());
 app.use(cors())
+app.use(express.static(path.resolve(__dirname, 'public')));
 
 // Connection to MongoDB
 mongoose.connect(mongodb)
@@ -39,6 +43,17 @@ app.use('/admin/course', addCourseRoute)
 
 // attendance
 app.use('/admin/attendance', addAttendanceRoute)
+
+
+// marks
+app.use("/admin/marks", getMarksRoutes);
+
+
+
+// upload
+app.use('/admin',uploadImage)
+
+
 
 
 
