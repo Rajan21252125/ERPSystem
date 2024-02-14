@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState , useEffect } from "react";
 import useGetAllCourse from "../../customHook/useGetAllCourse";
+import { adminUrl } from "../../helper/utils";
 
 
 const EditedData = ({data}) => {
@@ -47,7 +48,7 @@ const EditedData = ({data}) => {
     const handleSubmitForm = async (e) => {
         e.preventDefault()
         try {
-            const response = await fetch(`http://localhost:4000/admin/student/updateStudent/${data?._id}`,{
+            const response = await fetch(`${adminUrl}student/updateStudent/${data?._id}`,{
                 method:'PUT',
                 headers:{
                     'Content-Type':'application/json'
@@ -69,7 +70,6 @@ const EditedData = ({data}) => {
     }
 
     useEffect(() => {
-        console.log(data)
         const originalDate = data?.dateOfBirth;
         const formattedDate = originalDate ? new Date(originalDate).toISOString().split('T')[0] : "";
 
@@ -167,7 +167,7 @@ const EditedData = ({data}) => {
                     </div>
                 </div>
                 <div className='flex justify-center my-8'>
-                    <button type="submit" className="w-1/3 bg-blue-500 font-semibold text-white p-2 rounded hover:bg-blue-600">Add Student</button>
+                    <button type="submit" className="w-1/3 bg-blue-500 font-semibold text-white p-2 rounded hover:bg-blue-600">Update Student Data</button>
                 </div>
             </form>
         </div>

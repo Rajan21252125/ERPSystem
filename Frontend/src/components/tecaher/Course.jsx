@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import useGetAllCourse from "../../customHook/useGetAllCourse";
 import AddSubject from "./AddSubject";
 import DeleteSubject from "./DeleteSubject";
+import { adminUrl } from "../../helper/utils";
 
 const Course = () => {
   const courses = useGetAllCourse();
@@ -26,7 +27,7 @@ const Course = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:4000/admin/course/addCourse",
+        `${adminUrl}course/addCourse`,
         {
           method: "POST",
           headers: {
@@ -56,7 +57,7 @@ const Course = () => {
     try {
       console.log(deleteCourse);
       const response = await fetch(
-        "http://localhost:4000/admin/course/deleteCourse",
+        `${adminUrl}course/deleteCourse`,
         {
           method: "DELETE",
           headers: {
@@ -122,7 +123,7 @@ const Course = () => {
                 onClick={handleAddCourse}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               >
-                Submit
+                Add Course
               </button>
             </form>
           </div>
@@ -155,7 +156,7 @@ const Course = () => {
                 onClick={handleDeleteCourse}
                 className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
               >
-                Submit
+                Delete Course
               </button>
             </form>
           </div>

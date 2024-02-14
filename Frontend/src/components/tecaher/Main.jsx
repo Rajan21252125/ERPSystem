@@ -1,5 +1,6 @@
 import {useEffect} from 'react';
 import Navbar from './Navbar';
+import teacherBg from "../../assets/images/teacherBg.avif";
 
 const TeacherLandingPage = () => {
 
@@ -13,7 +14,7 @@ const TeacherLandingPage = () => {
   return (
     <div>
         <Navbar />
-      <div className="bg-primary w-full h-screen flex flex-col justify-center items-center bg-cover" style={{ backgroundImage: `url(images/teacherBg.avif)` }}>
+      <div className="bg-primary w-full h-[91vh] flex flex-col justify-center items-center bg-cover" style={{ backgroundImage: `url(${teacherBg})` }}>
         <div className="text-black text-center">
           <h1 className="text-5xl font-bold mb-4 text-white">Welcome, Teacher!</h1>
           <p className="text-lg text-white">

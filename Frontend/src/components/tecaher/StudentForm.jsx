@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import AddStudent from "./AddStudent";
 import Navbar from "./Navbar";
 import EditedData from "./EditedData";
+import useGetAllCourse from "../../customHook/useGetAllCourse";
+import { adminUrl } from "../../helper/utils";
 
 const StudentForm = () => {
   const [hide, setHide] = useState(true);
@@ -13,10 +15,13 @@ const StudentForm = () => {
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
 
+  // getting all the course name from the backend
+  const courses = useGetAllCourse();
+
   const fetchData = async () => {
     try {
       const response = await fetch(
-        "http://localhost:4000/admin/student/getAllData"
+        `${adminUrl}student/getAllData`
       );
       const json = await response.json();
       if (json.success === true) {
@@ -55,7 +60,7 @@ const StudentForm = () => {
   const handleDelete = async (id, email) => {
     try {
       const response = await fetch(
-        `http://localhost:4000/admin/student/deleteStudent/${id}`,
+        `${adminUrl}student/deleteStudent/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -143,12 +148,15 @@ const StudentForm = () => {
               value={selectedCourse}
               onChange={handleCourseChange}
             >
-              <option value="">Select Course</option>
-              <option value="Computer Science">Computer Science</option>
-              <option value="Information Technology">Information Technology</option>
-              <option value="Electronic and Telecommunication">Electronic and Telecommunication</option>
-              <option value="Mechanical">Mechanical</option>
-              <option value="CIVIL">Civil</option>
+              <option value="" >
+              Select a Course Name
+            </option>
+            {courses &&
+              courses.map((course, index) => (
+                <option key={index} value={course}>
+                  {course}
+                </option>
+              ))}
             </select>
             <select
               className="text-gray-500 py-2 px-4 w-64 border-2 border-gray-300 rounded"

@@ -3,8 +3,9 @@ import React, { useState , useEffect } from "react";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { TfiReload } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
+import login from "../assets/images/login.jpg";
 
-function Login() {
+const Login = () => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ email: '', password: '', role: 'student' });
   const [showPassword, setShowPassword] = useState(false);
@@ -149,7 +150,7 @@ function Login() {
         </div>
       </div>
       <div className="w-1/2 hidden lg:block">
-        <img src="images/login.jpg" alt="" className="object-cover w-[40rem]" />
+        <img src={login} alt="" className="object-cover w-[40rem]" />
       </div>
     </div>
   );

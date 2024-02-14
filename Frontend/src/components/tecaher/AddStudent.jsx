@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
 import useGetLastEmail from "../../customHook/useGetLastEmail";
+import useGetAllCourse from "../../customHook/useGetAllCourse";
+import { adminUrl } from "../../helper/utils";
 
 const AddStudent = () => {
+  // Custom hooks for fetching last email and course data
   const lastEmail = useGetLastEmail();
+  const courses = useGetAllCourse();
+
+  // State for form data
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -20,6 +26,7 @@ const AddStudent = () => {
     year: "",
   });
 
+  // Function to handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -28,6 +35,8 @@ const AddStudent = () => {
     }));
   };
 
+
+  // Function to handle address changes
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -39,11 +48,12 @@ const AddStudent = () => {
     }));
   };
 
+  // Function to handle form submission
   const handleSubmitForm = async (e) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:4000/admin/student/addStudent",
+        `${adminUrl}student/addStudent`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -51,9 +61,10 @@ const AddStudent = () => {
         }
       );
       const json = await response.json();
-      // console.log(json);
       if (json.success === true) {
+        // Automatically generate password from email
         const password = formData.email.split("@")[0];
+        // Send email and password to signup API
         const emailResponse = await fetch(
           "http://localhost:4000/api/auth/signup",
           {
@@ -82,24 +93,23 @@ const AddStudent = () => {
     }
   };
 
-
   // Update formData.email when lastEmail changes
-useEffect(() => {
-  if (lastEmail) {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      email: lastEmail,
-    }));
-  }
-}, [lastEmail]);
-
-console.log(formData.email);
+  useEffect(() => {
+    if (lastEmail) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        email: lastEmail,
+      }));
+    }
+  }, [lastEmail]);
 
   return (
     <div className="absolute border border-black w-[50%] bg-white shadow-xl rounded-xl top-10 left-10 px-4 py-2">
       <form onSubmit={handleSubmitForm}>
         <div className="flex justify-between">
           <div className="w-[49%]">
+            {/* Input fields for personal information */}
+            {/* First Name */}
             <label className="mt-2 text-base font-semibold">
               First Name:
               <input
@@ -111,6 +121,7 @@ console.log(formData.email);
                 required
               />
             </label>
+            {/* Last Name */}
             <label className="mt-2 text-base font-semibold">
               Last Name:
               <input
@@ -122,6 +133,7 @@ console.log(formData.email);
                 required
               />
             </label>
+            {/* Email */}
             <label className="mt-2 text-base font-semibold">
               Email:
               <input
@@ -133,6 +145,7 @@ console.log(formData.email);
                 required
               />
             </label>
+            {/* Date of Birth */}
             <label className="mt-2 text-base font-semibold">
               Date of Birth:
               <input
@@ -144,24 +157,25 @@ console.log(formData.email);
                 required
               />
             </label>
+            {/* Enrolled Courses */}
             <label className="mt-2 text-base font-semibold">
               Enrolled Courses:
               <select
-                className="w-full text-gray-500 p-2 border-2 border-gray-300 rounded"
                 name="enrolledCourseName"
                 value={formData.enrolledCourseName}
                 onChange={handleInputChange}
+                className="w-full text-gray-500 p-2 border-2 border-gray-300 rounded"
               >
-                <option value="" disabled>
-                  Select a Enrolled Course
-                </option>
-                <option value="CSE">Computer Science</option>
-                <option value="IT">Information Technology</option>
-                <option value="E&TC">Electronic and Telecommunication</option>
-                <option value="MECH">Mechanical</option>
-                <option value="CIVIL">Civil</option>
+                <option value="">Select a Course Name</option>
+                {courses &&
+                  courses.map((course, index) => (
+                    <option key={index} value={course}>
+                      {course}
+                    </option>
+                  ))}
               </select>
             </label>
+            {/* Semester */}
             <label className="mt-2 text-base font-semibold">
               Semester:
               <select
@@ -185,6 +199,8 @@ console.log(formData.email);
             </label>
           </div>
           <div className="w-[48%]">
+            {/* Input fields for address and contact information */}
+            {/* Street */}
             <label className="mt-2 text-base font-semibold">
               Street:
               <input
@@ -196,6 +212,7 @@ console.log(formData.email);
                 required
               />
             </label>
+            {/* City */}
             <label className="mt-2 text-base font-semibold">
               City:
               <input
@@ -207,6 +224,7 @@ console.log(formData.email);
                 required
               />
             </label>
+            {/* State */}
             <label className="mt-2 text-base font-semibold">
               State:
               <input
@@ -218,6 +236,7 @@ console.log(formData.email);
                 required
               />
             </label>
+            {/* Zip Code */}
             <label className="mt-2 text-base font-semibold">
               Zip Code:
               <input
@@ -229,6 +248,7 @@ console.log(formData.email);
                 required
               />
             </label>
+            {/* Contact Number */}
             <label className="mt-2 text-base font-semibold">
               Contact Number:
               <input
@@ -240,6 +260,7 @@ console.log(formData.email);
                 required
               />
             </label>
+            {/* Year */}
             <label className="mt-2 text-base font-semibold">
               Year:
               <select
@@ -259,6 +280,7 @@ console.log(formData.email);
             </label>
           </div>
         </div>
+        {/* Submit Button */}
         <div className="flex justify-center my-8">
           <button
             type="submit"

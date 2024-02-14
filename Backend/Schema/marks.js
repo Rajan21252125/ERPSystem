@@ -7,6 +7,10 @@ const marksSchema = new mongoose.Schema({
     ref: 'Student',
     required: true
   },
+  courseName: {
+    type: String,
+    required: true,
+  },
   subject: {
     type: String,
     required: true,

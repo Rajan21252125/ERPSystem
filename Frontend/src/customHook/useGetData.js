@@ -2,13 +2,14 @@
 import { useEffect } from "react";
 import { getUserData } from "../store/userSlice";
 import { useDispatch } from "react-redux";
+import { adminUrl } from "../helper/utils";
 
 const useGetData = (email) => {
     // console.log(email)
     const dispatch = useDispatch()
     const fetchData = async() => {
         try {
-            const response = await fetch("http://localhost:4000/admin/student/showStudent", {
+            const response = await fetch(`${adminUrl}student/showStudent`, {
                 method: "POST",
                 headers:{
                     'Content-Type': 'application/json'
@@ -19,7 +20,7 @@ const useGetData = (email) => {
             // console.log(json)
             dispatch(getUserData(json))
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     }
 

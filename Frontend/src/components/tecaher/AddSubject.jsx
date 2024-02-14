@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useGetAllCourse from "../../customHook/useGetAllCourse";
+import { adminUrl } from "../../helper/utils";
 
 const AddSubject = () => {
   const courses = useGetAllCourse();
@@ -21,7 +22,7 @@ const AddSubject = () => {
     // console.log(toAddSubject);
     try {
       const addSubject = await fetch(
-        "http://localhost:4000/admin/course/addSubject",
+        `${adminUrl}course/addSubject`,
         {
           method: "POST",
           headers: {
@@ -111,7 +112,7 @@ const AddSubject = () => {
           onClick={handleSubjectData}
           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
         >
-          Submit
+          Add Subject
         </button>
       </form>
     </div>

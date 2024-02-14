@@ -3,6 +3,7 @@ import axios from "axios";
 import useGetAllCourse from "../../customHook/useGetAllCourse";
 import useGetAllSubjects  from "../../customHook/useGetAllSubjects";
 import Navbar from "./Navbar";
+import { adminUrl } from "../../helper/utils";
 
 const AddAttendance = () => {
 
@@ -56,7 +57,7 @@ const AddAttendance = () => {
         isPresent: student.isPresent
       }));
       // console.log(attendanceRecords)
-      await axios.post("http://localhost:4000/admin/attendance/add", attendanceRecords );
+      await axios.post(`${adminUrl}attendance/add`, attendanceRecords );
       alert("Attendance recorded successfully");
       // Clear the form after successful submission
       setFormData({
@@ -77,7 +78,7 @@ const AddAttendance = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        "http://localhost:4000/admin/student/getAllData"
+        `${adminUrl}student/getAllData`
       );
       const json = await response.json();
       if (json.success === true) {
@@ -96,7 +97,6 @@ const AddAttendance = () => {
 
 
   useEffect(() => {
-    // console.log(formData.courseName)
     const filteredData = studentData.filter(
       (student) =>
         (formData.courseName === "" ||
@@ -112,16 +112,14 @@ const AddAttendance = () => {
 
   // getting subject whenever there is the change in semester or course Name
   useEffect(()=> {
-    // console.log(formData.courseName)
     setParamsSubject((prevData) => ({ ...prevData, courseName: formData.courseName , semester : formData.semester }))
-    // console.log(paramsSubject)
   },[formData.courseName,formData.semester])
   
 
   return (
     <div>
       <Navbar />
-    <div className="mt-10 mx-40">
+    <div className="mt-5 mx-14">
       <h2 className="text-center font-semibold text-3xl">Add Attendance</h2>
       <form onSubmit={handleSubmit}>
         <div className="border-b py-4 space-x-8 mt-6">
@@ -223,7 +221,7 @@ const AddAttendance = () => {
             </tbody>
           </table>
         </div>
-        <button type="submit" className="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg font-semibold text-white mt-4">Submit</button>
+        <button type="submit" className="bg-green-600 mb-8 hover:bg-green-500 px-4 py-2 rounded-lg font-semibold text-white mt-4">Add Attendance</button>
       </form>
     </div>
     </div>

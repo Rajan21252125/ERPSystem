@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import logo from "../../assets/images/logo.jpg"
 
 
 
@@ -36,7 +37,9 @@ const Navbar = () => {
   return (
     <nav className="w-full flex py-6 px-8 justify-between items-center navbar h-16 bg-blue-900">
       {/* Logo */}
-      <h1 className="text-3xl text-white flex font-bold"> <img src="./images/logo.jpg" alt="logo" className="w-10 mx-2"/>RPS-Admin</h1>
+      <Link to={"/admin/"}>
+      <h1 className="text-3xl text-white flex font-bold"> <img src={logo} alt="logo" className="w-10 mx-2"/>RPS-Admin</h1>
+      </Link>
       
       {/* Desktop Navigation */}
       <ul className="list-none md:flex hidden justify-end items-center flex-1">

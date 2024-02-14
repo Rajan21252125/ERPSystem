@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useGetAllSubjects from "../../customHook/useGetAllSubjects";
 import useGetAllCourse from "../../customHook/useGetAllCourse";
+import { adminUrl } from "../../helper/utils";
 
 const DeleteSubject = () => {
   const courses = useGetAllCourse();
@@ -31,7 +32,7 @@ const DeleteSubject = () => {
     e.preventDefault();
     try {
       const addSubject = await fetch(
-        "http://localhost:4000/admin/course/deleteSubject",
+        `${adminUrl}course/deleteSubject`,
         {
           method: "DELETE",
           headers: {
@@ -44,6 +45,9 @@ const DeleteSubject = () => {
       if (json.success === false) {
         alert(json.message);
       } else {
+        setToDeleteSubject({courseName: "",
+        semester: "",
+        subject: ""})
         alert(json.message);
       }
     } catch (error) {
@@ -122,9 +126,9 @@ const DeleteSubject = () => {
         <button
           type="submit"
           onClick={handleDeleteSubjectData}
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
         >
-          Submit
+          Delete Subject 
         </button>
       </form>
     </div>

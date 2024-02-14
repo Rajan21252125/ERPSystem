@@ -21,8 +21,8 @@ route.post('/add', async (req, res) => {
 
 route.get("/", async(req,res) => {
   try {
-    const marks = await Attendance.find({})
-    res.status(200).send({ success : true , data: marks});
+    const attendance = await Attendance.find({})
+    res.status(200).send({ success : true , data: attendance});
   } catch (error) {
     console.log(error)
   }

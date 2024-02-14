@@ -8,6 +8,8 @@ import { AiFillCaretDown } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import useGetData from "../../customHook/useGetData";
+import avatar from "../../assets/images/avatar1.jpg";
+import logo from "../../assets/images/logo.jpg";
 
 function Landing() {
   // let location = useLocation();
@@ -29,11 +31,11 @@ function Landing() {
   return (
     <header className='flex justify-between items-center p-4'>
       <div className="flex space-x-2 items-center">
-        <img src="images/logo.jpg" alt="" className='w-10'/>
+        <img src={logo} alt="" className='w-10'/>
         <p className='font-semibold text-gray-700'>RPS College</p>
       </div>
       <div className="flex group space-x-2 items-center relative">
-        <img src="images/avatar1.jpg" alt="" className='w-10 rounded-full'/> 
+        <img src={avatar} alt="" className='w-10 rounded-full'/> 
         <AiFillCaretDown />
         <div className='hidden z-100 bg-white group-hover:block absolute top-10 right-2 text-base text-gray-800'>
             <div className='h-40 w-56 p-4 border border-black bg-white/60'>

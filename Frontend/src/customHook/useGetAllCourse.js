@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { adminUrl } from "../helper/utils";
 
 const useGetAllCourse = () => {
     const [ data,setData ] = useState([])
     const fetchCourseName = async () => {
         try {
-          const response = await fetch("http://localhost:4000/admin/course/");
+          const response = await fetch(`${adminUrl}course/`);
           const json = await response.json();
           if (json.success === false) {
             console.log("something went wrong");
