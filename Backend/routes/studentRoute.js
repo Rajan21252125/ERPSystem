@@ -8,6 +8,53 @@ const jwt = require("jsonwebtoken");
 
 
 
+
+
+
+
+// Middleware to validate JWT token
+const verifyToken = (req, res, next) => {
+  // Get the token from the request headers
+  const token = req.header('Authorization');
+
+  // Check if token exists
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  const jwtToken = token.replace("Bearer ","").trim();
+  // Verify the token
+  jwt.verify(jwtToken, 'ErpForFinalYear', (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: 'Invalid token' });
+    }
+    // If token is valid, attach the decoded payload to the request object
+    req.user = decoded;
+    next();
+  });
+};
+
+// Protected route to get user profile
+route.get('/profile', verifyToken, async (req, res) => {
+  try {
+    // Get user ID from the decoded token
+    const userId = req.user.user.email;
+    
+
+    // Find user data using the ID
+    const user = await Student.findOne({email : userId});
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Return user data
+    res.status(200).json({ success: true, data: user });
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
 // to add student data 
 route.post('/addStudent', [] , async (req,res) => {
     try {

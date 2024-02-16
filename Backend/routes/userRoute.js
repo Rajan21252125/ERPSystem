@@ -36,9 +36,10 @@ route.post('/login', [ // validation for email and length check for name and paa
           const data = {
             user: {
               id: user.id,
+              email: user.email
             },
           };
-          var token = jwt.sign(data, JWT_SECRET, { expiresIn: "1h" });
+          var token = jwt.sign(data, JWT_SECRET);
           res.json({ success: true, token, role,email });
         }
       } catch (error) {
@@ -74,6 +75,7 @@ route.post('/signup', [ // validation for email and length check for name and pa
         const data = {
           user: {
             id: user.id,
+            email: user.email
           },
         };
         var token = jwt.sign(data, JWT_SECRET);

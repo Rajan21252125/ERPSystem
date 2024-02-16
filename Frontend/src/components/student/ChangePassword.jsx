@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import useGetData from "../../customHook/useGetData";
 
 const ChangePassword = () => {
   const [inputNewPass, setInputNewPass] = useState("");
@@ -7,7 +9,11 @@ const ChangePassword = () => {
   const [inputOtp, setInputOtp] = useState("");
   const [ otp,setOtp ] = useState("")
 
-  const email = localStorage.getItem("email");
+  useGetData();
+  const localEmail = useSelector(store => store.user.user.email)
+  const [email,setEmail] = useState(localEmail ? localEmail : "");
+  
+
 
   const ChangeData = async () => {
     try {
@@ -76,7 +82,7 @@ const ChangePassword = () => {
             name="email"
             placeholder="Email"
             value={email}
-            readOnly
+            onChange={((e)  => setEmail(localEmail ? localEmail : e.target.value))}
             className="w-full border p-2 rounded"
           />
           <input

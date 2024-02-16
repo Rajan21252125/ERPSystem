@@ -9,6 +9,7 @@ const addCourseRoute = require('./routes/courseRoute.js');
 const addAttendanceRoute = require('./routes/attendanceRoute.js');
 const uploadImage = require('./routes/uploadImage.js');
 const getMarksRoutes = require('./routes/marksRoute.js');
+const addAlert = require("./routes/alertRoute.js");
 
 dotenv.config();
 const app = express();
@@ -54,7 +55,8 @@ app.use("/admin/marks", getMarksRoutes);
 app.use('/admin',uploadImage)
 
 
-
+// alert 
+app.use("/admin/alert",addAlert);
 
 
 // Default route

@@ -2,11 +2,19 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { Bar } from 'react-chartjs-2'
-import { Chart, registerables } from 'chart.js'
-Chart.register(...registerables)
+import { Chart, registerables } from 'chart.js';
+import useGetAllSubjects from "../../customHook/useGetAllSubjects";
+import { useSelector } from 'react-redux';
+Chart.register(...registerables);
 
 export default function Progress(props) {
-  
+  // const course = useSelector(state => state.user.user.enrolledCourseName)
+  // const semester = useSelector(state => state.user.user.semester)
+  // console.log(semester)
+  // console.log(course)
+  // const subjects = useGetAllSubjects({courseName:course,semester:semester});
+  // console.log(subjects)
+
 const state = {
   labels: [
     'MIS',

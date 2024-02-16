@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
-import React, { useState , useEffect } from "react";
+import { useState  } from "react";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { TfiReload } from "react-icons/tfi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import login from "../assets/images/login.jpg";
 
 const Login = () => {
@@ -42,7 +41,7 @@ const Login = () => {
           if (json.role === "student") {
             localStorage.setItem('token', json.token);
             localStorage.setItem('role', json.role);
-            localStorage.setItem('email', json.email);
+            // localStorage.setItem('email', json.email);
             navigate('/');
           } else {
             localStorage.setItem('token', json.token);
@@ -87,6 +86,7 @@ const Login = () => {
               name="role"
               value={credentials.role}
               onChange={handleOnChange}
+              required
             >
               <option value="student">Student</option>
               <option value="teacher">Teacher</option>
@@ -100,6 +100,7 @@ const Login = () => {
               className="w-full p-2 border rounded"
               value={credentials.email}
               onChange={handleOnChange}
+              required
             />
           </div>
           <div className="relative mb-4">
@@ -110,6 +111,7 @@ const Login = () => {
               className="w-full p-2 border rounded"
               value={credentials.password}
               onChange={handleOnChange}
+              required
             />
             <span
               className="absolute right-3 top-3 text-xl"
@@ -117,8 +119,12 @@ const Login = () => {
             >
               {showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
             </span>
+            <Link to={"/changePass"}><span className="text-[13px] absolute -bottom-5 right-0 text-gray-500 hover:underline cursor-pointer">
+              Forgot Password
+            </span>
+            </Link>
           </div>
-          <div className="relative mb-4">
+          <div className="relative my-4">
             <input
               type="text"
               placeholder="Captcha"

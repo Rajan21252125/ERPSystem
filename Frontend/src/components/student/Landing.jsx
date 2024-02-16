@@ -13,9 +13,9 @@ import logo from "../../assets/images/logo.jpg";
 
 function Landing() {
   // let location = useLocation();
-  useGetData(localStorage.getItem('email'))
+  useGetData();
   const student = useSelector(store => store.user.user)
-  // console.log(store)
+  // console.log(student)
 
 
   const handleChangePassword = () => {
@@ -25,7 +25,7 @@ function Landing() {
   const handleLogout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('role')
-    localStorage.removeItem('email')
+    // localStorage.removeItem('email')
     window.location='/login'
   }
   return (

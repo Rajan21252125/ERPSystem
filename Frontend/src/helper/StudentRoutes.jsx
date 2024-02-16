@@ -4,7 +4,7 @@ const StudentRoutes = () => {
     // Retrieve the role from localStorage
     let role = localStorage.getItem('role');
     
-    // Check if the role is "student"
+    // Check if the role is "student"]
     return (
         role === "student" ? <Outlet /> : <Navigate to={"/login"} />
     );

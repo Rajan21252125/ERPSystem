@@ -6,8 +6,13 @@ import { FaRegThumbsUp, FaRegBell } from "react-icons/fa";
 import { BsInfoCircle } from "react-icons/bs";
 import { AiOutlineWarning } from "react-icons/ai";
 import Progress from "./Progress";
+import useGetAttendance from "../../customHook/useGetAttendance";
+import useGetAllAlert from "../../customHook/useGetAllAlert";
 
 export default function Main() {
+
+  const alert = useGetAllAlert();
+  console.log(alert)
   const name = [
     {
       name: "Success",
@@ -23,7 +28,7 @@ export default function Main() {
     },
     {
       name: "Alerts",
-      msg: 0,
+      msg: alert.length,
       icon: <FaRegBell />,
       color: "bg-red-400",
     },
@@ -34,7 +39,7 @@ export default function Main() {
       color: "bg-yellow-400",
     },
     {
-      name: "Approvals",
+      name: "Notice",
       msg: 0,
       icon: <FaRegBell />,
       color: "bg-green-800",
@@ -62,6 +67,9 @@ export default function Main() {
       background: "",
     },
   ];
+
+  const AttendanceData = useGetAttendance();
+  // console.log(AttendanceData);
   const data = [68.42,53.33,10,68.89,64.44,60]
   return (
     <>

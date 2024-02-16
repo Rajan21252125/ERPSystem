@@ -27,6 +27,20 @@ route.get("/", async(req,res) => {
     console.log(error)
   }
 })
+
+
+route.get("/:id",async(req,res) => {
+  try {
+    const id = req.params.id;
+    const studentAttendance = await Attendance.find({studentId: id});
+    if(!studentAttendance){
+      return res.status(404).send({ success : false , msg : "no student with this id "})
+    }
+    res.status(200).send({success :true ,data : studentAttendance })
+  } catch (error) {
+    res.status(500).send({ success : false , msg : "Server problem we will be back sonn !!"})
+  }
+})
   
 
 
