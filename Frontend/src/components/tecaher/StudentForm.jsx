@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import EditedData from "./EditedData";
 import useGetAllCourse from "../../customHook/useGetAllCourse";
 import { adminUrl } from "../../helper/utils";
+import { ToastContainer, toast } from "react-toastify";
 
 const StudentForm = () => {
   const [hide, setHide] = useState(true);
@@ -20,9 +21,7 @@ const StudentForm = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(
-        `${adminUrl}student/getAllData`
-      );
+      const response = await fetch(`${adminUrl}student/getAllData`);
       const json = await response.json();
       if (json.success === true) {
         setStudentData(json?.studentData);
@@ -59,15 +58,12 @@ const StudentForm = () => {
 
   const handleDelete = async (id, email) => {
     try {
-      const response = await fetch(
-        `${adminUrl}student/deleteStudent/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${adminUrl}student/deleteStudent/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const json = await response.json();
       if (json.success === true) {
@@ -83,6 +79,7 @@ const StudentForm = () => {
             }
           );
           const emailJson = await emailDelte.json();
+          // console.log(emailJson)
           if (emailJson.success === true) {
             console.log("Successfully");
           } else {
@@ -91,14 +88,15 @@ const StudentForm = () => {
         } catch (error) {
           console.log(error);
         }
-        alert("Deleted Successfully");
-        fetchData();
+        toast.success("Deleted Successfully");
+        window.location.reload(); 
       } else {
+        toast.error("Error deleting student");
         throw new Error("Something went wrong!");
       }
     } catch (error) {
       console.log(error);
-      alert("Error deleting student");
+      toast.error("Error deleting student");
     }
   };
 
@@ -148,15 +146,13 @@ const StudentForm = () => {
               value={selectedCourse}
               onChange={handleCourseChange}
             >
-              <option value="" >
-              Select a Course Name
-            </option>
-            {courses &&
-              courses.map((course, index) => (
-                <option key={index} value={course}>
-                  {course}
-                </option>
-              ))}
+              <option value="">Select a Course Name</option>
+              {courses &&
+                courses.map((course, index) => (
+                  <option key={index} value={course}>
+                    {course}
+                  </option>
+                ))}
             </select>
             <select
               className="text-gray-500 py-2 px-4 w-64 border-2 border-gray-300 rounded"
@@ -178,6 +174,18 @@ const StudentForm = () => {
             >
               Add New Student
             </button>
+            <ToastContainer
+              position="bottom-center"
+              theme="colored"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
           </div>
         </div>
         <div>

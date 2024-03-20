@@ -3,6 +3,9 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { TfiReload } from "react-icons/tfi";
 import { Link, useNavigate } from "react-router-dom";
 import login from "../assets/images/login.jpg";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { BACKEND_URL } from "../helper/utils";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,7 +33,7 @@ const Login = () => {
       setCaptchaValid(true);
       // console.log(credentials)
       try {
-        const response = await fetch('http://localhost:4000/api/auth/login', {
+        const response = await fetch(`${BACKEND_URL}/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: credentials.email, password: credentials.password, role: credentials.role }),
@@ -38,6 +41,7 @@ const Login = () => {
         const json = await response.json();
         // console.log(json);
         if (json.success) {
+          toast("Login successfully 👍👍👍");
           if (json.role === "student") {
             localStorage.setItem('token', json.token);
             localStorage.setItem('role', json.role);
@@ -153,6 +157,7 @@ const Login = () => {
           >
             Login
           </button>
+          <ToastContainer />
         </div>
       </div>
       <div className="w-1/2 hidden lg:block">

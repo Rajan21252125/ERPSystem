@@ -14,7 +14,7 @@ route.post("/addSubject", async (req, res) => {
     try {
         // Find the course by its name and semester
         const course = await Course.findOne({ courseName, semester });
-        if (!course) {
+         if (!course) {
             return res.status(404).json({ success: false, message: 'Course not found' });
         }
 

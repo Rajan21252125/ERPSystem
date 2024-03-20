@@ -2,6 +2,8 @@ import { useState } from "react";
 import useGetAllSubjects from "../../customHook/useGetAllSubjects";
 import useGetAllCourse from "../../customHook/useGetAllCourse";
 import { adminUrl } from "../../helper/utils";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const DeleteSubject = () => {
   const courses = useGetAllCourse();
@@ -30,34 +32,33 @@ const DeleteSubject = () => {
 
   const handleDeleteSubjectData = async (e) => {
     e.preventDefault();
+    if (!toDeleteSubject.courseName || !toDeleteSubject.semester || !toDeleteSubject.subject){
+      return toast.warn("Please fill all required fields")
+    }
     try {
-      const addSubject = await fetch(
-        `${adminUrl}course/deleteSubject`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(toDeleteSubject),
-        }
-      );
-      const json = await addSubject.json();
-      if (json.success === false) {
-        alert(json.message);
-      } else {
-        setToDeleteSubject({courseName: "",
-        semester: "",
-        subject: ""})
-        alert(json.message);
+      const response = await fetch(`${adminUrl}course/deleteSubject`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(toDeleteSubject),
+      });
+      const json = await response.json();
+      if (!response.ok) {
+        throw new Error(json.message || "Failed to delete subject");
       }
+      setToDeleteSubject({ courseName: "", semester: "", subject: "" });
+      toast.success(json.message);
     } catch (error) {
-      console.log(error);
+      console.error("Delete subject error:", error);
+      toast.error(error.message);
     }
   };
+
   return (
     <div>
-      <h1 className="text-3xl font-semibold mb-4">Delete Subject to Course</h1>
-      <form className="space-y-4">
+      <h1 className="text-3xl font-semibold mb-4">Delete Subject from Course</h1>
+      <form className="space-y-4" onSubmit={handleDeleteSubjectData}>
         <div className="flex flex-col">
           <label htmlFor="courseName" className="mb-1">
             Course Name:
@@ -125,12 +126,23 @@ const DeleteSubject = () => {
         </div>
         <button
           type="submit"
-          onClick={handleDeleteSubjectData}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer"
         >
-          Delete Subject 
+          Delete Subject
         </button>
       </form>
+      <ToastContainer
+        position="bottom-center"
+        theme="colored"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

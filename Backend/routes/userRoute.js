@@ -47,6 +47,10 @@ route.post('/login', [ // validation for email and length check for name and paa
         return res.status(400).json({ error: "Server ERROR !! Please comeback after some time" })
       }
     })
+
+
+
+    
 // for signup
 route.post('/signup', [ // validation for email and length check for name and paasword
   body("email").isEmail().withMessage("Not a valid e-mail address"),

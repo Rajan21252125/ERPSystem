@@ -4,48 +4,44 @@ import Navbar from "./Navbar";
 import useGetAllCourse from '../../customHook/useGetAllCourse';
 import useGetAllSubjects from '../../customHook/useGetAllSubjects';
 import { adminUrl } from '../../helper/utils';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddMarks = () => {
-  // State variables
-  const [studentData, setStudentData] = useState([]); // State variable to store all student data
-  const [filteredStudentData, setFilteredStudentData] = useState([]); // State variable to store filtered student data
-  const [formData, setFormData] = useState({ // State variable to store form data
+  const [studentData, setStudentData] = useState([]);
+  const [filteredStudentData, setFilteredStudentData] = useState([]);
+  const [formData, setFormData] = useState({
     courseName: '',
     semester: '',
     subject: '',
     selectedExam: '',
   });
-
-  // State variable for fetching subject data
   const [paramsSubject, setParamsSubject] = useState({
     courseName: "",
     semester: ""
   });
+  const courses = useGetAllCourse();
+  const subjects = useGetAllSubjects(paramsSubject);
 
-  // Custom hooks for fetching course and subject data
-  const courses = useGetAllCourse(); // Custom hook to fetch all courses
-  const subjects = useGetAllSubjects(paramsSubject); // Custom hook to fetch subjects based on course and semester
-
-  // Function to handle form input changes
-  const handleChange = (e,studentId) => {
+  const handleChange = (e, studentId) => {
     const { name, value } = e.target;
-  // Update marks for the specific student
-  setFormData((prevData) =>  ({ ...prevData, [name]: value }));
-  setFilteredStudentData((prevData) =>
-    prevData.map((student) =>
-      student._id === studentId ? { ...student, [name]: value } : student
-    )
-  );
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFilteredStudentData((prevData) =>
+      prevData.map((student) =>
+        student._id === studentId ? { ...student, [name]: value } : student
+      )
+    );
     if (name === "courseName" || name === "semester") {
       setParamsSubject((prevData) => ({ ...prevData, [name]: value }));
     }
   };
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!formData.courseName || !formData.semester || !formData.subject || !formData.selectedExam){
+      return toast.warn("Please fill all required fields");
+    }
     try {
-      // Prepare marks data for all students
       const marksData = filteredStudentData.map((student) => ({
         studentId: student._id,
         courseName: formData.courseName,
@@ -54,33 +50,30 @@ const AddMarks = () => {
         marksObtained: student.marksObtained,
         selectedExam: formData.selectedExam,
       }));
-      // Send marks data to server
       const response = await axios.post(
         `${adminUrl}marks/addMarks`,
         marksData
       );
       if (response.data.success === false) {
-        return alert(response.data.message);
+        toast.error(response.data.message);
+        return;
       }
-      alert("Marks added successfully");
-      // Reset form data
+      toast.success("Marks added successfully");
       setFormData({
         courseName: "",
         semester: "",
         subject: "",
         selectedExam: "",
       });
-      // Reset marks for all students
       setFilteredStudentData((prevData) =>
         prevData.map((student) => ({ ...student, marksObtained: "" }))
       );
     } catch (error) {
       console.error("Error adding marks:", error);
-      alert("Failed to add marks. Please try again.");
+      toast.error("Failed to add marks. Please try again.");
     }
   };
 
-  // Function to fetch student data
   const fetchData = async () => {
     try {
       const response = await fetch(`${adminUrl}student/getAllData`);
@@ -88,19 +81,17 @@ const AddMarks = () => {
       if (json.success === true) {
         setStudentData(json?.studentData);
       } else {
-        alert("Error");
+        toast.error("Error fetching student data");
       }
     } catch (error) {
-      alert("Something went wrong, please try again later");
+      toast.error("Failed to fetch student data");
     }
   };
 
-  // Fetch student data on component mount
   useEffect(() => {
     fetchData();
   }, []);
 
-  // Filter student data based on selected course and semester
   useEffect(() => {
     const filteredData = studentData.filter(
       (student) =>
@@ -109,11 +100,10 @@ const AddMarks = () => {
     );
     setFilteredStudentData(filteredData.map((student) => ({
       ...student,
-      marksObtained: "" // Initialize marksObtained for each student as empty string
+      marksObtained: ""
     })));
   }, [studentData, formData.courseName, formData.semester]);
 
-  // Fetch subject data based on selected course and semester
   useEffect(() => {
     setParamsSubject((prevData) => ({ ...prevData, courseName: formData.courseName, semester: formData.semester }));
   }, [formData.courseName, formData.semester]);
@@ -184,6 +174,18 @@ const AddMarks = () => {
           <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
             Add Marks
           </button>
+          <ToastContainer
+        position="bottom-center"
+        theme="colored"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
         </form>
         <div className="mt-8">
           <h2 className="text-2xl font-semibold mb-4">Total Number of students: {filteredStudentData.length}</h2>
@@ -207,7 +209,7 @@ const AddMarks = () => {
                       type="text"
                       name='marksObtained'
                       value={data.marksObtained}
-                      onChange={(e) => handleChange(e, data._id)} // Pass studentId to handleChange
+                      onChange={(e) => handleChange(e, data._id)}
                       className="px-4 py-2 border border-gray-300 rounded w-full"
                     />
                   </td>

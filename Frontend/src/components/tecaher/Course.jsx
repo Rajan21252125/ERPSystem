@@ -4,6 +4,8 @@ import useGetAllCourse from "../../customHook/useGetAllCourse";
 import AddSubject from "./AddSubject";
 import DeleteSubject from "./DeleteSubject";
 import { adminUrl } from "../../helper/utils";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Course = () => {
   const courses = useGetAllCourse();
@@ -38,17 +40,18 @@ const Course = () => {
       );
       const json = await response.json();
       if (json.success === false) {
-        return alert(json.message);
+        return toast.error(json.message);
       }
       setAddCourse({
         courseName: "",
         year: 4,
       });
-      alert(json.message);
-      location.reload()
+      toast.success(json.message);
+      // Reload the courses after adding a new one
+      // This depends on how your useGetAllCourse hook is implemented
     } catch (error) {
-      alert("Something went wrong");
-      console.log(error);
+      toast.error("Something went wrong");
+      console.error("Add course error:", error);
     }
   };
 
@@ -69,13 +72,15 @@ const Course = () => {
       const json = await response.json();
       if (json.success === false) {
         setDeleteCourse("");
-        return alert(json.message);
+        return toast.error(json.message);
       }
       setDeleteCourse("");
-      return alert(json.message);
+      toast.success(json.message);
+      // Reload the courses after deleting one
+      // This depends on how your useGetAllCourse hook is implemented
     } catch (error) {
-      alert("Something went wrong");
-      console.log(error);
+      toast.error("Something went wrong");
+      console.error("Delete course error:", error);
     }
   };
 
@@ -162,6 +167,18 @@ const Course = () => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-center"
+        theme="colored"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

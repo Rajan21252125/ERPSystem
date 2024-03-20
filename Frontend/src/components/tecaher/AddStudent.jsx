@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import useGetLastEmail from "../../customHook/useGetLastEmail";
 import useGetAllCourse from "../../customHook/useGetAllCourse";
 import { adminUrl } from "../../helper/utils";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddStudent = () => {
   // Custom hooks for fetching last email and course data
@@ -83,12 +85,14 @@ const AddStudent = () => {
         } else {
           console.log(emailJSON.error);
         }
-        alert("Added Successfully");
+        toast.success("Added Successfully");
         window.location.reload();
       } else {
+        toast.error("Something went wrong!!");
         throw new Error("Something went wrong!");
       }
     } catch (error) {
+      toast.error("Please come after some time!!");
       console.log(error);
     }
   };
@@ -288,6 +292,17 @@ const AddStudent = () => {
           >
             Add Student
           </button>
+          <ToastContainer 
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          />
         </div>
       </form>
     </div>

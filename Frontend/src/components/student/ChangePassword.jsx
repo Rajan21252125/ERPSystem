@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useGetData from "../../customHook/useGetData";
+import { BACKEND_URL } from "../../helper/utils";
 
 const ChangePassword = () => {
   const [inputNewPass, setInputNewPass] = useState("");
@@ -17,7 +18,7 @@ const ChangePassword = () => {
 
   const ChangeData = async () => {
     try {
-      const response = await fetch("http://localhost:4000/api/auth/update", {
+      const response = await fetch(`${BACKEND_URL}/auth/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

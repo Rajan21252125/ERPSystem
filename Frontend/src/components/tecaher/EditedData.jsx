@@ -2,6 +2,7 @@
 import { useState , useEffect } from "react";
 import useGetAllCourse from "../../customHook/useGetAllCourse";
 import { adminUrl } from "../../helper/utils";
+import { ToastContainer, toast } from "react-toastify";
 
 
 const EditedData = ({data}) => {
@@ -57,14 +58,14 @@ const EditedData = ({data}) => {
             })
             const json =  await response.json();
             if (json.success === true ) {
-                alert('Update Successful');
+                toast.success('Update Successfully');
                 window.location.reload();
             } else {
-                alert("Something went wrong!!")
+                toast.error("Something went wrong!!")
                 throw new Error("Error in Updating Student");
             }
         } catch (error) {
-            alert("please come after some time !!")
+            toast.error("please come after some time !!")
             console.log(error)
         }
     }
@@ -168,6 +169,18 @@ const EditedData = ({data}) => {
                 </div>
                 <div className='flex justify-center my-8'>
                     <button type="submit" className="w-1/3 bg-blue-500 font-semibold text-white p-2 rounded hover:bg-blue-600">Update Student Data</button>
+                    <ToastContainer
+        position="bottom-center"
+        theme="colored"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
                 </div>
             </form>
         </div>
