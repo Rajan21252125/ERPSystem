@@ -3,33 +3,18 @@
 import React from 'react'
 import { Bar } from 'react-chartjs-2'
 import { Chart, registerables } from 'chart.js';
-import useGetAllSubjects from "../../customHook/useGetAllSubjects";
-import { useSelector } from 'react-redux';
 Chart.register(...registerables);
 
-export default function Progress(props) {
-  // const course = useSelector(state => state.user.user.enrolledCourseName)
-  // const semester = useSelector(state => state.user.user.semester)
-  // console.log(semester)
-  // console.log(course)
-  // const subjects = useGetAllSubjects({courseName:course,semester:semester});
-  // console.log(subjects)
+export default function Progress({data , label}) {
 
 const state = {
-  labels: [
-    'MIS',
-    'OS',
-    'FM',
-    'ML',
-    'MCS',
-    'PS7'
-  ],
+  labels: label,
   datasets: [
     {
       backgroundColor: 'rgba(219, 79, 142, 0.77)',
       borderColor: 'rgba(219, 79, 79, 0.77)',
       barThickness: 22,
-      data: props.data,
+      data: data,
       label:"",
       borderWidth: 1
     },
@@ -44,7 +29,7 @@ const state = {
             y:{
               beginAtZero:true,
               ticks:{
-                stepSize:30,
+                stepSize:20,
               }
             }
           },

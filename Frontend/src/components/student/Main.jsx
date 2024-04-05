@@ -10,9 +10,7 @@ import useGetAttendance from "../../customHook/useGetAttendance";
 import useGetAllAlert from "../../customHook/useGetAllAlert";
 
 export default function Main() {
-
   const alert = useGetAllAlert();
-  console.log(alert)
   const name = [
     {
       name: "Success",
@@ -69,8 +67,10 @@ export default function Main() {
   ];
 
   const AttendanceData = useGetAttendance();
-  // console.log(AttendanceData);
-  const data = [68.42,53.33,10,68.89,64.44,60]
+  const subjectLabel = Object.keys(AttendanceData);
+  const SubjectData = Object.values(AttendanceData);
+  const data = [45,65,76,34,76,34]
+  const label = ['MIS','OS','FM','ML','MCS','PS7']
   return (
     <>
       <div className="flex">
@@ -85,9 +85,11 @@ export default function Main() {
                 className={`border-2 border-black rounded-lg h-12 flex items-center justify-center cursor-pointer ${name.color} text-white`}
                 key={name.name}
               >
-                <p className="text-white mx-1">{name.icon}</p> 
+                <p className="text-white mx-1">{name.icon}</p>
                 <p>{name.name} </p>
-                <p className="bg-white text-black px-1 mx-2 rounded-sm mt-1">{name.msg}</p>
+                <p className="bg-white text-black px-1 mx-2 rounded-sm mt-1">
+                  {name.msg}
+                </p>
               </div>
             );
           })}
@@ -103,22 +105,30 @@ export default function Main() {
           })}
         </div>
         <div className="grid grid-cols-4 w-[98%] justify-center overflow-hidden">
-        <div className="flex flex-col my-10 ml-10 rounded-lg border-2 border-blue-900">
-          <p className="bg-[#002752] text-center font-semibold text-white">Subject Syllabus Status</p>
-          <Progress data={data}/>
-        </div>
-        <div className="flex flex-col my-10 ml-10 rounded-lg border-2 border-blue-900">
-          <p className="bg-[#002752] text-center font-semibold text-white">Subject Attendance</p>
-          <Progress data={data}/>
-        </div>
-        <div className="flex flex-col my-10 ml-10 rounded-lg border-2 border-blue-900">
-          <p className="bg-[#002752] text-center font-semibold text-white">Practical Attended</p>
-          <Progress data={data}/>
-        </div>
-        <div className="flex flex-col my-10 ml-10 rounded-lg border-2 border-blue-900">
-          <p className="bg-[#002752] text-center font-semibold text-white">Subject Result Analysis</p>
-          <Progress data={data}/>
-        </div>
+          <div className="flex flex-col my-10 ml-10 rounded-lg border-2 border-blue-900">
+            <p className="bg-[#002752] text-center font-semibold text-white">
+              Subject Syllabus Status
+            </p>
+            <Progress data={data} label={label}/>
+          </div>
+          <div className="flex flex-col my-10 ml-10 rounded-lg border-2 border-blue-900">
+            <p className="bg-[#002752] text-center font-semibold text-white">
+              Subject Attendance
+            </p>
+            <Progress data={SubjectData} label={subjectLabel}/>
+          </div>
+          <div className="flex flex-col my-10 ml-10 rounded-lg border-2 border-blue-900">
+            <p className="bg-[#002752] text-center font-semibold text-white">
+              Practical Attended
+            </p>
+            <Progress data={data} label={label}/>
+          </div>
+          <div className="flex flex-col my-10 ml-10 rounded-lg border-2 border-blue-900">
+            <p className="bg-[#002752] text-center font-semibold text-white">
+              Subject Result Analysis
+            </p>
+            <Progress data={data} label={label}/>
+          </div>
         </div>
         <div className="flex mx-8 my-10 space-x-4">
           <div className="border-2 border-black rounded-md w-[30%] h-60">

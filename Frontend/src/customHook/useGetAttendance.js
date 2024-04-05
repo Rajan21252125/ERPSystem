@@ -1,34 +1,37 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import useGellPercentAttendance from "./useGellPercentAttendance";
 
 const useGetAttendance = () => {
-    const id = useSelector(state => state.user.user._id);
+    const token = localStorage.getItem("token");
     const [attendanceData, setAttendanceData] = useState(null);
     
     // Get all attendance records for a specific user
     const fetchData = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/admin/attendance/${id}`);
+            const response = await fetch(`http://localhost:4000/admin/attendance/attendance`,{
+                headers:{
+                    Authorization: `Bearer ${token}` 
+                },
+            });
             const json = await response.json();
             
             if (!json.success) {
-                throw new Error(json.msg); // Throw an error for failed requests
+                toast.error(json.msg);
             }
-
-            console.log("data", json.data);
-            setAttendanceData(json.data); // Update state with fetched data
+            setAttendanceData(json.data);
         } catch (error) {
             console.error('Error:', error);
-            // Handle errors more gracefully, such as displaying an error message
-            setAttendanceData([]); // Set attendance data to an empty array on error
+            setAttendanceData([]);
         }
     }
 
     useEffect(() => {
         fetchData();
-    }, [id]); // Include id in the dependency array to re-fetch data when id changes
+    }, []);
 
-    return attendanceData; // Return the attendance data so it can be used outside the hook
+    const data = useGellPercentAttendance(attendanceData);
+    return data
 }
 
 export default useGetAttendance;

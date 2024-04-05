@@ -1,6 +1,8 @@
 const express = require("express");
 const route = express.Router();
 const Attendance = require("../Schema/attendance");
+const verifyToken = require("../middleware/auth");
+const StudentModel = require("../Schema/student");
 
 
 // Route to add attendance records for multiple students
@@ -29,9 +31,11 @@ route.get("/", async(req,res) => {
 })
 
 
-route.get("/:id",async(req,res) => {
+route.get("/attendance",verifyToken, async(req,res) => {
   try {
-    const id = req.params.id;
+    const mail = req.user.user.email;
+    const student = await StudentModel.findOne({email : mail});
+    const id = student._id;
     const studentAttendance = await Attendance.find({studentId: id});
     if(!studentAttendance){
       return res.status(404).send({ success : false , msg : "no student with this id "})

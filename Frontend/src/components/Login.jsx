@@ -31,9 +31,8 @@ const Login = () => {
     e.preventDefault();
     if (text.toLocaleLowerCase() === captcha.toLocaleLowerCase()) {
       setCaptchaValid(true);
-      // console.log(credentials)
       try {
-        const response = await fetch(`${BACKEND_URL}/auth/login`, {
+        const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: credentials.email, password: credentials.password, role: credentials.role }),
@@ -53,7 +52,7 @@ const Login = () => {
             navigate('/admin')
           }
         } else {
-          alert('Invalid credentials');
+          toast.error(json.error);
         }
       } catch (error) {
         console.error('Error during login:', error);

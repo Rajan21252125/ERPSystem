@@ -27,11 +27,11 @@ route.post('/login', [ // validation for email and length check for name and paa
         // console.log(user)
         // console.log(email,password,role)
         if (!user) {
-          throw new Error("Invalid Email or Password");
+          return res.status(400).json({ error: "User not found" });
         } else if (user.password !== password) {
-          throw new Error("Invalid Password");
+          return res.status(400).json({ error: "Invalid Password" });
         } else if (user.role !== role) {
-          throw new Error(`You are not ${role}`);
+          return res.status(400).json({ error: "Invalid Role" });
         } else {
           const data = {
             user: {

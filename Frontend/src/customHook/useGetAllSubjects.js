@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { adminUrl } from "../helper/utils";
 
 const useGetAllSubjects = (datas) => {
-    // console.log(datas)
     const [data, setData] = useState([])
     const fetchCourseName = async () => {
         try {
@@ -16,7 +15,6 @@ const useGetAllSubjects = (datas) => {
             if (json.success === false) {
                 // return console.log(json);
             }
-            // console.log(json)
             setData(json.data);
             // console.log(data)
         } catch (error) {
