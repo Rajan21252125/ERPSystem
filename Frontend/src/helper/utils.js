@@ -1,2 +1,2 @@
-export const adminUrl = "http://localhost:4000/admin/"
-export const BACKEND_URL = "http://localhost:4000"
+export const adminUrl = "erpsystem.railway.internal/admin/"
+export const BACKEND_URL = "erpsystem.railway.internal"

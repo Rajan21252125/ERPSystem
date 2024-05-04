@@ -61,7 +61,7 @@ app.use("/admin/alert",addAlert);
 
 // Default route
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello From Backend');
 });
 
 app.listen(PORT, () => {
