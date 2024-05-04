@@ -25,6 +25,10 @@ const Navbar = () => {
     {
       id: "/admin/addmarks",
       title: "addMarks",
+    },
+    {
+      id: "/admin/addAlert",
+      title: "addAlert",
     }
   ];
   const handleLogout = () => {

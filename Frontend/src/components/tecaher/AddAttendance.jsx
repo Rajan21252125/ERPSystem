@@ -19,7 +19,8 @@ const AddAttendance = () => {
     courseName: "",
     semester: "",
     subject: "",
-    isPresent: false,
+    type: "",
+    isPresent: false, 
   });
   const courses = useGetAllCourse();
   const subjects = useGetAllSubjects(paramsSubject);
@@ -33,8 +34,9 @@ const AddAttendance = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log(formData)
     e.preventDefault();
-    if (!formData.courseName || !formData.semester || !formData.subject){
+    if (!formData.courseName || !formData.semester || !formData.subject || !formData.type){
       return toast.warn("Please fill the all the required fields")
     }
     try {
@@ -43,6 +45,7 @@ const AddAttendance = () => {
         courseName: formData.courseName,
         semester: formData.semester,
         subject: formData.subject,
+        type: formData.type,
         isPresent: student.isPresent,
       }));
       await axios.post(`${adminUrl}attendance/add`, attendanceRecords);
@@ -112,7 +115,7 @@ const AddAttendance = () => {
               name="courseName"
               value={formData.courseName}
               onChange={handleChange}
-              className="px-4 py-2 border border-gray-300 rounded w-2/4"
+              className="px-4 py-2 border border-gray-300 rounded w-1/3"
             >
               <option value="">Select a Course Name</option>
               {courses &&
@@ -151,6 +154,16 @@ const AddAttendance = () => {
                     {sub}
                   </option>
                 ))}
+            </select>
+            <select
+              name="type"
+              value={formData.type}
+              onChange={handleChange}
+              className="px-4 py-2 border border-gray-300 rounded w-64"
+            >
+              <option value="">Select a Type</option>
+              <option value="theory">Theory</option>
+              <option value="practical">Practical</option>
             </select>
           </div>
           <div>

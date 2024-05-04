@@ -83,7 +83,12 @@ const AddSubject = () => {
             <option value="" disabled>Select a Semester</option>
             <option value="I">First Sem</option>
             <option value="II">Second Sem</option>
-            {/* Add other options for semesters */}
+            <option value="III">Third Sem</option>
+            <option value="IV">Fourth Sem</option>
+            <option value="V">Fifth Sem</option>
+            <option value="VI">Sixth Sem</option>
+            <option value="VII">Seventh Sem</option>
+            <option value="VIII">Eight Sem</option>
           </select>
         </div>
         {/* Subject */}

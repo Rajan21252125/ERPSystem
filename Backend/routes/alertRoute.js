@@ -9,7 +9,6 @@ route.post("/add", (req, res) => {
     try {
         const alert = req.body;
         new Alert(alert).save().then((data) => {
-            // console.log(`Alert added: ${JSON.stringify(data)}`);
             return res.status(201).json({ message: "Data has been saved" });
         }).catch((err) => {
             console.error(`Error adding data to database: ${err}`);

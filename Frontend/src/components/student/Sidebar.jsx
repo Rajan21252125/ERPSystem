@@ -6,6 +6,7 @@ import { VscTriangleDown } from "react-icons/vsc";
 import { ImCross } from "react-icons/im";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineBook, AiOutlineFileAdd } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 export default function Sidebar() {
     const [close, setClose] = useState(true);
@@ -16,19 +17,23 @@ export default function Sidebar() {
     const links = [
         {
             name: 'Attendance',
-            icon: <AiOutlineBook />
+            icon: <AiOutlineBook />,
+            link: '/attendance'
         },
-        {
-            name: 'Fees',
-            icon: <GiReceiveMoney />
-        },
+        // {
+        //     name: 'Fees',
+        //     icon: <GiReceiveMoney />,
+        //     link: '/fees'
+        // },
         {
             name: "Profile",
-            icon: <CgProfile />
+            icon: <CgProfile />,
+            link: '/profile'
         },
         {
             name: "E-Learning",
-            icon: <AiOutlineFileAdd />
+            icon: <AiOutlineFileAdd />,
+            link: '/e-library'
         }
     ];
     
@@ -48,9 +53,9 @@ export default function Sidebar() {
                 <ul className="space-y-3 my-4">
                     { links.map((link) => {
                         return <li key={ link.name } className="list-none">
-                            <a href="/" className="flex items-center justify-between hover:shadow-lg px-1 py-2">
+                            <Link to={link.link} className="flex items-center justify-between hover:shadow-lg px-1 py-2">
                                 <div className="flex items-center">{link.icon} {link.name}</div> <VscTriangleDown />
-                            </a>
+                            </Link>
                         </li>
                     })}
                 </ul>

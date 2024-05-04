@@ -55,7 +55,6 @@ route.post('/addStudent', [] , async (req,res) => {
             semester,
             year
           });
-          console.log(newStudent)
           // Save the student to the database
           await newStudent.save();
           res.status(201).json({ success: true , message:"student detail added succesfully"})      

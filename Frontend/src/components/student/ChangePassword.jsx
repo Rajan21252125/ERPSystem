@@ -18,7 +18,7 @@ const ChangePassword = () => {
 
   const ChangeData = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL}/auth/update`, {
+      const response = await fetch(`${BACKEND_URL}/api/auth/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -47,8 +47,6 @@ const Course = () => {
         year: 4,
       });
       toast.success(json.message);
-      // Reload the courses after adding a new one
-      // This depends on how your useGetAllCourse hook is implemented
     } catch (error) {
       toast.error("Something went wrong");
       console.error("Add course error:", error);
@@ -76,8 +74,6 @@ const Course = () => {
       }
       setDeleteCourse("");
       toast.success(json.message);
-      // Reload the courses after deleting one
-      // This depends on how your useGetAllCourse hook is implemented
     } catch (error) {
       toast.error("Something went wrong");
       console.error("Delete course error:", error);

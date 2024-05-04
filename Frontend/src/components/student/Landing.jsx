@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import useGetData from "../../customHook/useGetData";
 import avatar from "../../assets/images/avatar1.jpg";
 import logo from "../../assets/images/logo.jpg";
+import useGetAllMarks from '../../customHook/useGetAllMarks';
 
 function Landing() {
   // let location = useLocation();
@@ -30,10 +31,12 @@ function Landing() {
   }
   return (
     <header className='flex justify-between items-center p-4'>
+      <Link to={"/"}>
       <div className="flex space-x-2 items-center">
         <img src={logo} alt="" className='w-10'/>
         <p className='font-semibold text-gray-700'>RPS College</p>
       </div>
+      </Link>
       <div className="flex group space-x-2 items-center relative">
         <img src={avatar} alt="" className='w-10 rounded-full'/> 
         <AiFillCaretDown />

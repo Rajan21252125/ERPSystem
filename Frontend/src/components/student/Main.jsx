@@ -8,9 +8,16 @@ import { AiOutlineWarning } from "react-icons/ai";
 import Progress from "./Progress";
 import useGetAttendance from "../../customHook/useGetAttendance";
 import useGetAllAlert from "../../customHook/useGetAllAlert";
+import { useState } from "react";
+import Alerts from "./Alerts";
+import useGetAllMarks from "../../customHook/useGetAllMarks";
+import useGetAnalytics from "../../customHook/useGetAnalytics";
 
 export default function Main() {
   const alert = useGetAllAlert();
+  const marksData = useGetAllMarks();
+  // const marksDataArray = marksData
+  const [showAlerts , setShowAlerts] = useState(false);
   const name = [
     {
       name: "Success",
@@ -29,6 +36,7 @@ export default function Main() {
       msg: alert.length,
       icon: <FaRegBell />,
       color: "bg-red-400",
+      click : () => setShowAlerts(!showAlerts)
     },
     {
       name: "Warning",
@@ -67,10 +75,24 @@ export default function Main() {
   ];
 
   const AttendanceData = useGetAttendance();
-  const subjectLabel = Object.keys(AttendanceData);
-  const SubjectData = Object.values(AttendanceData);
+  let subjectLabel
+  let SubjectData
+  let pracData
+  if (!AttendanceData || !AttendanceData[0] || !AttendanceData[1]) {
+    subjectLabel = []
+    SubjectData = []
+    pracData = []
+  } else {
+    subjectLabel = Object.keys(AttendanceData[0]);
+    SubjectData = Object.values(AttendanceData[0]);
+    pracData = Object.values(AttendanceData[1]);
+  }
+
+
+  const alysisData = useGetAnalytics(marksData?.marks,subjectLabel,SubjectData)
+  
   const data = [45,65,76,34,76,34]
-  const label = ['MIS','OS','FM','ML','MCS','PS7']
+  // const label = ['MIS','OS','FM','ML','MCS','PS7']
   return (
     <>
       <div className="flex">
@@ -78,12 +100,14 @@ export default function Main() {
         <Heading />
       </div>
       <div className="border-2 border-black m-8 rounded-lg min-h-[70vh]">
+        {showAlerts && <div className="relative"><Alerts setShowAlerts={setShowAlerts}/></div>}
         <div className="grid grid-cols-5 m-8 gap-2">
           {name.map((name) => {
             return (
               <div
                 className={`border-2 border-black rounded-lg h-12 flex items-center justify-center cursor-pointer ${name.color} text-white`}
                 key={name.name}
+                onClick={name?.click}
               >
                 <p className="text-white mx-1">{name.icon}</p>
                 <p>{name.name} </p>
@@ -109,7 +133,7 @@ export default function Main() {
             <p className="bg-[#002752] text-center font-semibold text-white">
               Subject Syllabus Status
             </p>
-            <Progress data={data} label={label}/>
+            <Progress data={data} label={subjectLabel}/>
           </div>
           <div className="flex flex-col my-10 ml-10 rounded-lg border-2 border-blue-900">
             <p className="bg-[#002752] text-center font-semibold text-white">
@@ -121,13 +145,13 @@ export default function Main() {
             <p className="bg-[#002752] text-center font-semibold text-white">
               Practical Attended
             </p>
-            <Progress data={data} label={label}/>
+            <Progress data={pracData} label={subjectLabel}/>
           </div>
           <div className="flex flex-col my-10 ml-10 rounded-lg border-2 border-blue-900">
             <p className="bg-[#002752] text-center font-semibold text-white">
               Subject Result Analysis
             </p>
-            <Progress data={data} label={label}/>
+            <Progress data={alysisData} label={subjectLabel}/>
           </div>
         </div>
         <div className="flex mx-8 my-10 space-x-4">

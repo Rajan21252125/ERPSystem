@@ -4,7 +4,6 @@ import teacherBg from "../../assets/images/teacherBg.avif";
 
 const TeacherLandingPage = () => {
 
-
   useEffect(() => {
     if(!localStorage.getItem('token')){
       window.location='/login'
