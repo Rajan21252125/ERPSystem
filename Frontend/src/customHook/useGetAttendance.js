@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useGellPercentAttendance from "./useGellPercentAttendance";
+import { adminUrl } from "../helper/utils";
 
 const useGetAttendance = () => {
     const token = localStorage.getItem("token");
@@ -9,7 +10,7 @@ const useGetAttendance = () => {
     // Get all attendance records for a specific user
     const fetchData = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/admin/attendance/attendance`,{
+            const response = await fetch(`${adminUrl}attendance/attendance`,{
                 headers:{
                     Authorization: `Bearer ${token}` 
                 },

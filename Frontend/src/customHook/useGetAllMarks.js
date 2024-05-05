@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { adminUrl } from "../helper/utils";
 
 const useGetAllMarks = () => {
     const [marks, setMarks] = useState([]);
@@ -7,13 +8,12 @@ const useGetAllMarks = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/admin/marks/student`,{
+            const response = await fetch(`${adminUrl}marks/student`,{
                 headers:{
                     Authorization: `Bearer ${token}` 
                 },
             });
             const json = await response.json();
-            
             if (!json.success) {
                 toast.error(json.msg);
             }
