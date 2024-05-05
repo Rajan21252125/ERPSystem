@@ -27,7 +27,7 @@ function Landing() {
     localStorage.removeItem('token')
     localStorage.removeItem('role')
     // localStorage.removeItem('email')
-    window.location='/login'
+    window.location='/'
   }
   return (
     <header className='flex justify-between items-center p-4'>
