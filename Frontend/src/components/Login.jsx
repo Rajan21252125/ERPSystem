@@ -11,6 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ email: '', password: '', role: 'student' });
   const [showPassword, setShowPassword] = useState(false);
+  const [loading,setLoading] = useState(false);
 
   // captcha
   const randomString = Math.random().toString(36).slice(8).toLocaleUpperCase();
@@ -29,6 +30,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true)
     if (text.toLocaleLowerCase() === captcha.toLocaleLowerCase()) {
       setCaptchaValid(true);
       try {
@@ -58,8 +60,12 @@ const Login = () => {
         console.error('Error during login:', error);
         // Handle the error appropriately, e.g., show an error message to the user
       }
+      finally{
+        setLoading(false)
+      }
     } else {
       setCaptchaValid(false);
+      setLoading(false)
       console.log("Failed");
     }
   };
@@ -154,7 +160,7 @@ const Login = () => {
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
             onClick={handleLogin}
           >
-            Login
+            {loading ? "Loading..." : "Login"}
           </button>
           <ToastContainer />
         </div>
